@@ -1,5 +1,6 @@
 import express from "express";
-import { protect } from "../middlewear/authMiddleware.js";
+import protect from "../middleware/authMiddleware.js";
+
 import {
   getUserData,
   storeRecentSearchCities,
