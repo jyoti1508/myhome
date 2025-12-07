@@ -22,7 +22,7 @@ import User from "../models/User.js";
 
 export const registerHotel = async (req, res) => {
   try {
-    const { name, city, address, price } = req.body;
+    const { name, city, address, contact } = req.body;
     if (!req.user)
       return res
         .status(401)
@@ -32,7 +32,8 @@ export const registerHotel = async (req, res) => {
       name,
       city,
       address,
-      price,
+      contact,
+
       owner: req.user._id,
     });
 
