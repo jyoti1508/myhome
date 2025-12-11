@@ -55,7 +55,32 @@ const AddRoom = () => {
       Object.keys(images).forEach((key) => {
         images[key] && formData.append("images", images[key]);
       });
-    } catch (error) {}
+      const { data } = await axios.post("/api/rooms/", formData, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+
+      if (data.success) {
+        toast.success(data.message);
+        setInputs({
+          roomType: "",
+          pricePerNight: 0,
+          amenities: {
+            "Free Wifi": false,
+            "Free Breakfast": false,
+            "Room Service": false,
+            "Mountain View": false,
+            "Pool Access": false,
+          },
+        });
+        setImages({ 1: null, 2: null, 3: null, 4: null });
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -151,8 +176,11 @@ const AddRoom = () => {
             </div>
           ))}
         </div>
-        <button className="bg-primary text-white px-8 py-2 rounded mt-8 cursor-pointer">
-          Add Room
+        <button
+          className="bg-primary text-white px-8 py-2 rounded mt-8 cursor-pointer"
+          disabled={loading}
+        >
+          {loading ? "Adding..." : "Add Room"}
         </button>
       </form>
     </div>
