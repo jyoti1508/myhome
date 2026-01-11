@@ -14,12 +14,11 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
 
-    recentSearchedCities: {
-      type: [String], // <-- now an array
-      default: [], // no need to make it required
-    },
-  },
-  { timestamps: true }
+    recentSearchedCities: [{
+      type: String, 
+     required: true 
+  }],
+  },{ timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
