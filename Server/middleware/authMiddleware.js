@@ -13,17 +13,18 @@ const protect = async (req, res, next) => {
 
     const token = authHeader.split(" ")[1];
 
-    // Verify Clerk token using backend secret key
+    // Verify Clerk token
     const decoded = await verifyToken(token, {
       secretKey: process.env.CLERK_SECRET_KEY,
     });
 
-    // Attach user from DB
-    const user = await User.findById(decoded.sub);
+    // Find user in MongoDB using Clerk ID
+    const user = await User.findOne({ clerkId: decoded.sub });
+
     if (!user) {
       return res
         .status(404)
-        .json({ success: false, message: "User not found" });
+        .json({ success: false, message: "User not found in database" });
     }
 
     req.user = user;

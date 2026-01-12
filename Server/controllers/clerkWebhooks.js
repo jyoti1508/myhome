@@ -19,19 +19,27 @@ const clerkWebhooks = async (req, res) => {
     const evt = await wh.verify(payload, headers);
     const { data, type } = evt;
 
-    const userData = {
+    
+
+    if (type === "user.created") {
+      const userData = {
       _id: data.id,
       email: data.email_addresses[0].email_address,
       username: `${data.first_name} ${data.last_name}`,
       image: data.image_url,
       recentSearchedCities: "",
     };
-
-    if (type === "user.created") {
       await User.create(userData);
     }
 
     if (type === "user.updated") {
+      const userData = {
+      _id: data.id,
+      email: data.email_addresses[0].email_address,
+      username: `${data.first_name} ${data.last_name}`,
+      image: data.image_url,
+      recentSearchedCities: "",
+    };
       await User.findByIdAndUpdate(data.id, userData);
     }
 

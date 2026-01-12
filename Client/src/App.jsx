@@ -13,6 +13,8 @@ import AddRoom from "./pages/hotelOwner/AddRoom";
 import ListRoom from "./pages/hotelOwner/ListRoom";
 import { Toaster } from "react-hot-toast";
 import { useAppContext } from "./context/AppContext";
+import { SignedIn } from "@clerk/clerk-react";
+import SyncUser from "./SyncUser";
 
 const App = () => {
   const isOwnerPath = useLocation().pathname.includes("owner");
@@ -20,6 +22,12 @@ const App = () => {
   return (
     <div>
       <Toaster />
+
+       {/* 🔥 SYNC USER AFTER LOGIN/SIGNUP */}
+      <SignedIn>
+        <SyncUser />
+      </SignedIn>
+
       {!isOwnerPath && <Navbar />}
       {showHotelReg && <HotelReg />}
       <div className="min-h-[70vh]">

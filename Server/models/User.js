@@ -2,11 +2,15 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    _id: { type: String, required: true }, // Clerk User ID (keep if needed)
+      clerkId: { 
+      type: String,
+       required: true, 
+       unique: true,
+      }, // Clerk User ID (keep if needed)
 
-    username: { type: String, required: true },
-    email: { type: String, required: true },
-    image: { type: String, required: true },
+    username: { type: String},
+    email: { type: String, required: true, },
+    image: { type: String, required: true, },
 
     role: {
       type: String,
@@ -14,10 +18,10 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
 
-    recentSearchedCities: [{
-      type: String, 
-     required: true 
-  }],
+     recentSearchCities: {
+      type: [String],
+      default: [],
+    },
   },{ timestamps: true }
 );
 
