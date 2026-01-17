@@ -8,7 +8,7 @@ const SyncUser = () => {
   useEffect(() => {
     if (!isLoaded || !user) return;
     
-    console.log("🔥 CLERK USER:", user.id);
+    
 
     axios
       .post("http://localhost:3000/api/user/sync-user", {

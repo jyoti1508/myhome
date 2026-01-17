@@ -2,7 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 
+
+
 const HotelCard = ({ room, index }) => {
+  
+   if (!room.hotel) return null;
   return (
     <Link
       to={"/rooms/" + room._id}
@@ -21,7 +25,7 @@ const HotelCard = ({ room, index }) => {
       <div className="p-4 pt-5">
         <div className="flex items-center justify-between">
           <p className="font-playfair text-xl font-medium text-gray-800">
-            {room.hotel.name}
+             {room.hotel?.name || "Hotel unavailable"}
           </p>
           <div className="flex items-center gap-1">
             <img src={assets.starIconFilled} alt="star-icon" /> 4.5
@@ -29,8 +33,11 @@ const HotelCard = ({ room, index }) => {
         </div>
         <div className="flex items-center gap-1 text-sm">
           <img src={assets.locationIcon} alt="location-icon" />
-          <span>{room.hotel.address}</span>
+          <span>{room.hotel.address}, {room.hotel.city}</span>
+          
+
         </div>
+        
         <div className="flex items-center justify-between mt-4">
           <p>
             <span>${room.pricePerNight}</span> / night

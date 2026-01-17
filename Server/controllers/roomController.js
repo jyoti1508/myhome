@@ -43,7 +43,8 @@ export const getRooms = async (req, res) => {
     const rooms = await Room.find({ isAvailable: true })
       .populate({
         path: "hotel",
-        select: "image",
+        select: "name address city",
+        
       })
       .sort({ createdAt: -1 });
     res.json({ success: true, rooms });
@@ -62,7 +63,7 @@ export const getOwnerRooms = async (req, res) => {
       return res.json({ success: true, rooms: [] });
     }
 
-    const rooms = await Room.find({ hotel: hotelData._id.toString() }).populate(
+    const rooms = await Room.find({ hotel: hotelData._id}).populate(
       "hotel"
     );
     res.json({ success: true, rooms });

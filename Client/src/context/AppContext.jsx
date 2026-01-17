@@ -104,7 +104,11 @@ useEffect(()=>{
     setRooms,
   };
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return( 
+   <AppContext.Provider value={value}>
+    {children}
+   </AppContext.Provider>
+  );
 };
 
 export const useAppContext = () => useContext(AppContext);

@@ -44,7 +44,7 @@ const MyBookings = () => {
 
                 <div className="flex items-center gap-1 text-sm text-gray-500">
                   <img src={assets.locationIcon} alt="location-icon" />
-                  <span>{booking.hotel.address}</span>
+                  <span>{booking.hotel.address}, {room.hotel.city}</span>
                 </div>
                 <div className="flex items-center gap-1 text-sm text-gray-500">
                   <img src={assets.guestsIcon} alt="guests-icon" />

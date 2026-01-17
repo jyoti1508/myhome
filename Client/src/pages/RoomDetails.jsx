@@ -4,27 +4,35 @@ import {
   assets,
   facilityIcons,
   roomCommonData,
-  roomsDummyData,
 } from "../assets/assets";
+import { useNavigate } from "react-router-dom";
 import StarRating from "../components/StarRating";
+import { useAppContext } from "../context/AppContext";
 
 const RoomDetails = () => {
   const { id } = useParams();
+  const {rooms, getToken, axios} = useAppContext();
+  const navigate = useNavigate();
   const [room, setRoom] = useState(null);
   const [mainImage, setMainImage] = useState(null);
+  const [checkInDate, setCheckInDate] = useState(null);
+  const [checkOutDate, setCheckOutDate] = useState(null);
+  const [guests, setGuests] = useState(1);
+
+  const[isAvailable, setIsAvailable] = useState(false);
 
   useEffect(() => {
-    const room = roomsDummyData.find((room) => room._id === id);
+    const room = rooms.find((room) => room._id === id);
     room && setRoom(room);
     room && setMainImage(room.images[0]);
-  }, []);
+  }, [rooms]);
   return (
     room && (
       <div className="py-28 md:py-35 px-4 md:px-16 lg:px-24 xl:px-32">
         {/* Room Details  */}
         <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
           <h1 className="text-3xl md:text-4xl font-playfair">
-            {room.hotel.name}
+             {room.hotel?.name || "Hotel unavailable"}
             <span className="font-inter text-sm">({room.roomType})</span>
           </h1>
           <p className="text-xs font-inter py-1.5 px-3 text-white bg-orange-500 rounded-full">
@@ -40,7 +48,7 @@ const RoomDetails = () => {
         {/* Room address  */}
         <div className="flex items-center gap-1 text-gray-500 mt-2">
           <img src={assets.locationIcon} alt="location-icon" />
-          <span>{room.hotel.address}</span>
+          <span>{room.hotel.address}, {room.hotel.city}</span>
         </div>
 
         {/* Room Image  */}
@@ -185,13 +193,15 @@ const RoomDetails = () => {
               className="h-14 w-14 md:h-18 md:w-18 rounded-full"
             />
             <div>
-              <p className="text-lg md:text-xl">Hosted by {room.hotel.name}</p>
+              <p className="text-lg md:text-xl">Hosted by {room.hotel?.name || "Hotel unavailable"}
+</p>
               <div className="flex items-center mt-1">
                 <StarRating />
                 <p className="ml-2">200+ reviews</p>
               </div>
             </div>
           </div>
+          
 
           <button className="px-6 py-2.5 mt-4 rounded text-white bg-primary hover:bg-primary-dull transition-all cursor-pointer">
             Contact Now

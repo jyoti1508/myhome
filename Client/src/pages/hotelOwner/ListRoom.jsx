@@ -72,7 +72,9 @@ const ListRoom = () => {
             </tr>
           </thead>
           <tbody className="text-sm">
-            {rooms.map((item) => (
+             {rooms
+                .filter(item => item.hotel)
+                .map((item) => (
                 <tr key={item._id}>
 
                 <td className="py-3 px-4 text-gray-700 border-t border-gray-300">
